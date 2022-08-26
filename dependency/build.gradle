@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-autoconfigure:3.0.0-SNAPSHOT'
+}
+
+tasks.named('jar').configure {
+    doLast {
+        print('signing jar...')
+        ant.signjar(
+                alias: 'sign-key',
+                jar: 'build/libs/*.jar',
+                keystore: 'keystore.jks',
+                storepass: 'secret',
+                verbose: true
+        )
+        println(' done')
+    }
+}
